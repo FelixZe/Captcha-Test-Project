@@ -9,18 +9,19 @@
             border: 1px solid black;
         }
     </style>
-    <script type='text/javascript'>
-        window.onload = function () {
-            var canvas = new fabric.Canvas('sheet');
-            canvas.isDrawingMode = true;
-            canvas.freeDrawingBrush.width = 5;
-            canvas.freeDrawingBrush.color = "#ff0000";
-        }
-    </script>
 </head>
 
 <body>
+    <h1>Draw the Number</h1>
+    <p>Draw the number: <span id="target-number"></span></p>
     <canvas id="sheet" width="400" height="400"></canvas>
+    <div id="controls">
+        <button id="clear-btn">Clear</button>
+        <button id="submit-btn">Submit</button>
+    </div>
+    <p id="response-message"></p>
+    <script src="../static/js/script.js"></script>
+
 </body>
 
 </html>
