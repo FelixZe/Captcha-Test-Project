@@ -11,7 +11,7 @@ window.onload = function () {
 
     // Configure drawing mode
     canvas.isDrawingMode = true;
-    canvas.freeDrawingBrush.width = 25;
+    canvas.freeDrawingBrush.width = 35;
     canvas.freeDrawingBrush.color = "#000000";
 
     // Clear canvas
