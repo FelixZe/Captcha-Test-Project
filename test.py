@@ -6,6 +6,11 @@ from PIL import Image, ImageOps
 import io
 import os
 import time
+from flask import Flask, request, jsonify
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+import traceback 
 
 # Flask setup
 app = Flask(__name__, template_folder="templates")
@@ -58,6 +63,10 @@ n.load_weights("numbersAI/neuralNetNodes")
 def index():
     return render_template("index.html")
 
+@app.route('/feedback')
+def feedback_page():
+    return render_template("feedback.html")
+
 UPLOAD_FOLDER = 'uploaded_images'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
@@ -104,6 +113,50 @@ def verify():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+    # Konfigurationsvariablen für die E-Mail
+SMTP_SERVER = 'smtp.gmail.com'  # Ersetzen mit SMTP-Server
+SMTP_PORT = 587  # Üblicherweise 587 für TLS oder 465 für SSL
+EMAIL_ADDRESS = 'captcha.feedback@gmail.com'  # Ersetzen mit E-Mail-Adresse
+EMAIL_PASSWORD = 'erykctmyglgivgrk'  # Ersetzen mit E-Mail-Passwort
+
+@app.route('/feedback', methods=['POST'])
+def feedback():
+
+    print("Request Content-Type:", request.content_type)  # <-- Debugging
+    print("Raw Request Data:", request.data)  # <-- Debugging
+    try:
+        # JSON-Daten aus der Anfrage extrahieren
+        data = request.get_json()
+        if not data:
+            return jsonify({'error': 'Keine Daten erhalten'}), 400
+
+        name = data.get('name', 'Anonym')
+        message = data.get('message', '')
+
+        if not message:
+            return jsonify({'error': 'Nachricht darf nicht leer sein'}), 400
+
+        # Email erstellen
+        msg = MIMEMultipart()
+        msg['From'] = EMAIL_ADDRESS
+        msg['To'] = EMAIL_ADDRESS  # Feedback an eigene E-Mail senden
+        msg['Subject'] = 'Neues Feedback erhalten'
+        msg.attach(MIMEText(f"Name: {name}\n\nNachricht:\n{message}", 'plain'))
+
+        # Email senden
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+            server.starttls()  # TLS-Verschlüsselung starten
+            server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+            server.send_message(msg)
+
+        return jsonify({'message': 'Feedback erfolgreich gesendet'}), 200
+
+    except Exception as e:
+        print("Fehlermeldung:", e)  # Logge Fehler
+        print(traceback.format_exc())  # Detaillierter Fehler-Trace
+        return jsonify({'error': str(e)}), 500
+
+    
 # Run server
 if __name__ == '__main__':
     app.run(debug=True)

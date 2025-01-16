@@ -1,4 +1,5 @@
 window.onload = function () {
+    // Canvas setup
     const canvas = new fabric.Canvas("sheet");
     const targetNumberElement = document.getElementById("target-number");
     const clearBtn = document.getElementById("clear-btn");
@@ -6,7 +7,7 @@ window.onload = function () {
     const responseMessage = document.getElementById("response-message");
 
     // Set random target number
-    let targetNumber = Math.floor(Math.random() * 5) + 2 ; // Random number 0-9
+    let targetNumber = Math.floor(Math.random() * 5) + 2; // Random number 2-6
     targetNumberElement.textContent = targetNumber;
 
     // Configure drawing mode

@@ -6,11 +6,10 @@ from email.mime.multipart import MIMEMultipart
 app = Flask(__name__)
 
 # Konfigurationsvariablen für die E-Mail
-SMTP_SERVER = 'smtp.example.com'  # Ersetzen mit SMTP-Server
+SMTP_SERVER = 'smtp.gmail.com'  # Ersetzen mit SMTP-Server
 SMTP_PORT = 587  # Üblicherweise 587 für TLS oder 465 für SSL
-EMAIL_ADDRESS = 'your-email@example.com'  # Ersetzen mit E-Mail-Adresse
-EMAIL_PASSWORD = 'your-email-password'  # Ersetzen mit E-Mail-Passwort
-RECIPIENT_EMAIL = 'recipient@example.com'  # E-Mail-Adresse, an die das Feedback gesendet werden soll
+EMAIL_ADDRESS = 'aptcha.feedback@gmail.com'  # Ersetzen mit E-Mail-Adresse
+EMAIL_PASSWORD = 'FiO_9e!zT'  # Ersetzen mit E-Mail-Passwort
 
 @app.route('/feedback', methods=['POST'])
 def feedback():
@@ -24,7 +23,7 @@ def feedback():
         # E-Mail erstellen
         msg = MIMEMultipart()
         msg['From'] = EMAIL_ADDRESS
-        msg['To'] = RECIPIENT_EMAIL
+        msg['To'] = EMAIL_ADDRESS
         msg['Subject'] = 'Neues Feedback erhalten'
 
         body = f"Name: {name}\nE-Mail: {email}\n\nNachricht:\n{message}"
