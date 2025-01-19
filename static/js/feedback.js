@@ -3,12 +3,18 @@ document.addEventListener("DOMContentLoaded", function () {
     const feedbackResponseMessage = document.getElementById("responseMessage");
 
     feedbackForm.addEventListener("submit", async function (event) {
-        event.preventDefault(); // ⛔ Verhindert GET-Request (Standardaktion)
+        event.preventDefault(); // ⛔ Verhindert Standardaktion (GET-Request)
 
-        const name = document.getElementById("name").value.trim();
-        const message = document.getElementById("message").value.trim();
+        // Eingabefelder referenzieren
+        const nameInput = document.getElementById("name");
+        const messageTextarea = document.getElementById("message");
 
-        if (!message) {
+        // Werte aus den Feldern lesen
+        const name = nameInput.value.trim();
+        const messages = messageTextarea.value.trim();
+
+        // Validierung
+        if (!messages) {
             feedbackResponseMessage.textContent = "Bitte geben Sie eine Nachricht ein.";
             feedbackResponseMessage.style.color = "red";
             return;
@@ -16,25 +22,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
         try {
             const response = await fetch("/feedback", {
-                method: "POST", // ✅ Richtige Methode setzen
+                method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name, message }),
+                body: JSON.stringify({ name, messages }),
             });
 
             const result = await response.json();
-            print("📩 Serverantwort:", result); 
 
             if (response.ok) {
-                feedbackResponseMessage.textContent = "Vielen Dank für Ihr Feedback!";
+                feedbackResponseMessage.textContent = result.message; // Erfolgsmeldung anzeigen
                 feedbackResponseMessage.style.color = "green";
-                feedbackForm.reset();
             } else {
-                feedbackResponseMessage.textContent = `Fehler: ${result.error}`;
+                feedbackResponseMessage.textContent = result.error || "Ein Fehler ist aufgetreten.";
                 feedbackResponseMessage.style.color = "red";
             }
         } catch (error) {
-            feedbackResponseMessage.textContent = "Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.";
-            feedbackResponseMessage.style.color = "red";
+            ffeedbackResponseMessage.textContent = result.message;
+            feedbackResponseMessage.style.color = "green";
+        } finally {
+            // Felder immer zurücksetzen, unabhängig vom Erfolg oder Fehler
+            nameInput.value = "";
+            messageTextarea.value = "";
         }
     });
 });

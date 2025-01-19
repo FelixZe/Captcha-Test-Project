@@ -131,9 +131,9 @@ def feedback():
             return jsonify({'error': 'Keine Daten erhalten'}), 400
 
         name = data.get('name', 'Anonym')
-        message = data.get('message', '')
+        messages = data.get('messages', '')
 
-        if not message:
+        if not messages:
             return jsonify({'error': 'Nachricht darf nicht leer sein'}), 400
 
         # Email erstellen
@@ -141,7 +141,7 @@ def feedback():
         msg['From'] = EMAIL_ADDRESS
         msg['To'] = EMAIL_ADDRESS  # Feedback an eigene E-Mail senden
         msg['Subject'] = 'Neues Feedback erhalten'
-        msg.attach(MIMEText(f"Name: {name}\n\nNachricht:\n{message}", 'plain'))
+        msg.attach(MIMEText(f"Name: {name}\n\nNachricht:\n{messages}", 'plain'))
 
         # Email senden
         with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
@@ -149,12 +149,13 @@ def feedback():
             server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
             server.send_message(msg)
 
-        return jsonify({'message': 'Feedback erfolgreich gesendet'}), 200
+        message = "Feedback erfolgreich gesendet"
+        return jsonify({"message": message})
 
     except Exception as e:
         print("Fehlermeldung:", e)  # Logge Fehler
         print(traceback.format_exc())  # Detaillierter Fehler-Trace
-        return jsonify({'error': str(e)}), 500
+        return jsonify({'message': str(e)})
 
     
 # Run server
