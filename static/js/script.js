@@ -1,5 +1,6 @@
 window.onload = function () {
     // Canvas setup
+    console.log("UHAGIOUHÖHGIOHGAIOUGH");
     const canvas = new fabric.Canvas("sheet");
     const targetNumberElement = document.getElementById("target-number");
     const clearBtn = document.getElementById("clear-btn");

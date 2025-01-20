@@ -1,0 +1,14 @@
+modules = ["web", "python-3.12", "nodejs-20"]
+
+run = "node server.js"
+
+[nix]
+channel = "stable-24_05"
+
+[[ports]]
+localPort = 3000
+externalPort = 3000
+
+[[ports]]
+localPort = 5000
+externalPort = 80

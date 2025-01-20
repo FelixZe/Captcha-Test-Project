@@ -8,7 +8,7 @@ app = Flask(__name__)
 # Konfigurationsvariablen für die E-Mail
 SMTP_SERVER = 'smtp.gmail.com'  # Ersetzen mit SMTP-Server
 SMTP_PORT = 587  # Üblicherweise 587 für TLS oder 465 für SSL
-EMAIL_ADDRESS = 'aptcha.feedback@gmail.com'  # Ersetzen mit E-Mail-Adresse
+EMAIL_ADDRESS = 'captcha.feedback@gmail.com'  # Ersetzen mit E-Mail-Adresse
 EMAIL_PASSWORD = 'FiO_9e!zT'  # Ersetzen mit E-Mail-Passwort
 
 @app.route('/feedback', methods=['POST'])
