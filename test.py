@@ -91,7 +91,8 @@ def verify():
         image.save(image_path, "PNG", quality=95)
 
         # Process image for the neural network
-        image_path = '/Users/stevelang/Documents/Captcha-Test-Project/uploaded_images/canvas_image_2.png'
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        image_path = os.path.join(current_dir, "uploaded_images", "canvas_image_2.png")
         processed_image = Image.open(image_path).convert('L')
 
         # Convert to numpy array and preprocess
