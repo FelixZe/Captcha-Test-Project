@@ -19,4 +19,4 @@ externalPort = 8080
 
 [deployment]
 deploymentTarget = "cloudrun"
-run = ["sh", "-c", "npm run .replit"]
+run = ["sh", "-c", "npm run server.js"]
