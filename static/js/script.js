@@ -8,7 +8,8 @@ window.onload = function () {
     const responseMessage = document.getElementById("response-message");
 
     // Set random target number
-    let targetNumber = Math.floor(Math.random() * 5) + 2; // Random number 2-6
+    //let targetNumber = Math.floor(Math.random() * 5) + 2; // Random number 2-6
+    let targetNumber = Math.floor(Math.random() * 10);
     targetNumberElement.textContent = targetNumber;
 
     // Configure drawing mode
