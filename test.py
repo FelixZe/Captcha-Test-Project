@@ -74,6 +74,10 @@ def index():
 def feedback_page():
     return render_template("feedback.html")
 
+@app.route('/about-page')
+def about_page():
+    return render_template("aboutpage.html")
+
 
 UPLOAD_FOLDER = 'uploaded_images'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
