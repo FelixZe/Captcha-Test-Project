@@ -6,11 +6,17 @@ window.onload = function () {
     const clearBtn = document.getElementById("clear-btn");
     const submitBtn = document.getElementById("submit-btn");
     const responseMessage = document.getElementById("response-message");
+    const refrehsbtn = document.getElementById('refresh-btn');
 
     // Set random target number
     //let targetNumber = Math.floor(Math.random() * 5) + 2; // Random number 2-6
     let targetNumber = Math.floor(Math.random() * 10);
     targetNumberElement.textContent = targetNumber;
+
+    refrehsbtn.addEventListener("click", () => {
+        let targetNumber = Math.floor(Math.random() * 5) + 2;
+        targetNumberElement.textContent = targetNumber;
+    });
 
     // Configure drawing mode
     canvas.isDrawingMode = true;
