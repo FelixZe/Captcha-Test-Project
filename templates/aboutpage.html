@@ -2,11 +2,95 @@
 <html>
 
 <head>
-    <title>Simple example</title>
-    <script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.4.0/fabric.min.js'></script>
-    <style type='text/css'>
-        #sheet {
-            border: 1px solid black;
+    <title>About Page</title>
+    <style type="text/css">
+        /* General Styles */
+
+        /* About Page Styles */
+        .about-form {
+            margin-left: 350px;
+            margin-top: 100px;
+            position: absolute;
+        }
+
+        .about-card {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            width: 600px;
+            font-family: Inter;
+        }
+
+        .about-title {
+            color: #2f2ee9;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            border-bottom: 2px solid #f0f3ff;
+            padding-bottom: 0.5rem;
+        }
+
+        .about-content {
+            color: #676A6F;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .highlight-box {
+            background: #f8f9fa;
+            border-left: 4px solid #2f2ee9;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .team-section {
+            margin: 2rem 0;
+        }
+
+        .team-list {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+
+        .team-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .tech-details {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+        }
+
+        .tech-list {
+            list-style-type: square;
+            padding-left: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .tech-list li {
+            margin: 0.8rem 0;
+        }
+
+        .percentage {
+            color: #2f2ee9;
+            font-weight: 500;
+            background: #f0f3ff;
+            padding: 0.2em 0.5em;
+            border-radius: 4px;
+            margin: 0 0.3em;
+        }
+
+        h3 {
+            color: #2f2ee9;
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
         }
     </style>
 </head>
@@ -143,22 +227,40 @@
                     style="color: #252525; font-size: 28px; font-family: Inter; font-weight: 600; line-height: 24px; word-wrap: break-word">
                     Captcha Test</div>
             </div>
-            <div class="feedback-form" style="margin-left: 350px; margin-top: 100px; position: absolute;">
-                <h2>The What, the Who and the How</h2>
-                <p>This website is the result of a projectmanagement course at the TU Dresden. </br>
-                Our idea was creating a new type of captcha test. In this one the user has to draw a number as close to a computerwritten one as possible to 
-                verify that he is not a robot.</br></br>
-                The frontend was programmed by Steve Lang, the backend logic got implemented by Felix Zenker. </br>
-                Jingjing Zhang managed deadlines and papers.</br></br>
-                Here some tecnical details about the project:</br>
-                - We used 77.1% HTML, 17.4% python and 4.8% javascript
-                - The AI got trained with about 10.000 images of handwritten numbers which where pretty close to computer drawn letters
-                - As visible in the URL, this website is hosted on replit.com.
-                </p>
+            <div class="about-form">
+                <div class="about-card">
+                    <h2 class="about-title">The What, the Who and the How</h2>
+                    <div class="about-content">
+                        <p>This website is the result of a project management course at the TU Dresden.</p>
+                        <div class="highlight-box">
+                            <p>Our idea was creating a new type of captcha test where users must draw numbers
+                                mimicking computer-written ones to verify they're not robots.</p>
+                        </div>
+                        <div class="team-section">
+                            <h3>Development Team</h3>
+                            <ul class="team-list">
+                                <li>Frontend: Steve Lang</li>
+                                <li>Backend: Felix Zenker, Steve Lang</li>
+                                <li>Project Management: Jingjing Zhang</li>
+                            </ul>
+                        </div>
+                        <div class="tech-details">
+                            <h3>Technical Specifications</h3>
+                            <ul class="tech-list">
+                                <li>Language distribution:
+                                    <span class="percentage">77.1% HTML</span>,
+                                    <span class="percentage">17.4% Python</span>,
+                                    <span class="percentage">4.8% JavaScript</span>
+                                </li>
+                                <li>AI trained on 10,000+ near-computer-style handwritten number images</li>
+                                <li>Hosted on Replit platform</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
 </body>
 
 </html>

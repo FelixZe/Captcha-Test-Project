@@ -6,8 +6,174 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js"
         defer></script>
     <style type="text/css">
+                .number {
+            margin-left: 350px;
+            margin-top: 100px;
+            position: absolute;
+        }
+
+        .captcha-card {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            width: 600px;
+            height: 720px;
+        }
+
+        .captcha-title {
+            color: #2f2ee9;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
         #sheet {
-            border: 1px solid black;
+            border: 2px solid black;
+            border-radius: 12px;
+        }
+
+        .captcha-container {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+            /* Wichtig! */
+        }
+
+        .canvas-column {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            width: 300px;
+            margin-top: 15px;
+            /* Gleiche Breite wie Canvas */
+        }
+
+        .response-message {
+            width: 95%;
+            max-width: 100px;
+            margin: 0 auto;
+            padding: 1rem;
+            text-align: center;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .response-message.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .instructions-panel {
+            flex: 1;
+            max-width: 300px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 1.5rem;
+            /* Optional für symmetrische Anordnung */
+        }
+
+        .instructions-header {
+            color: #2f2ee9;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .instruction-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .instruction-item {
+            padding: 0.8rem;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            flex: 1 1 30%;
+            margin: 0;
+        }
+
+        .instruction-item:nth-child(n+4) {
+            flex: 1 1 45%;
+        }
+
+        @media (max-width: 768px) {
+
+            .instruction-item,
+            .instruction-item:nth-child(n+4) {
+                flex: 1 1 100%;
+            }
+        }
+
+        .icon {
+            font-size: 1.2rem;
+        }
+
+        .control-group {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .control-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            background: #2f2ee9;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(47, 46, 233, 0.3);
+        }
+
+        .clear {
+            background: #ff4757;
+        }
+
+        .refresh {
+            background: #2ed573;
+        }
+
+        .btn-icon {
+            font-size: 1.1rem;
+        }
+
+        .target-number {
+            color: #2f2ee9;
+            font-weight: 700;
+            font-size: 1.2em;
+            padding: 0.2em 0.5em;
+            background: #f0f3ff;
+            border-radius: 4px;
+        }
+
+        .note {
+            margin-top: 1.5rem;
+            font-size: 0.9em;
+            color: #666;
+            line-height: 1.4;
+            padding: 1rem;
+            background: #fff;
+            border-radius: 8px;
+            border: 1px solid #eee;
         }
     </style>
 </head>
@@ -411,25 +577,68 @@
                     Captcha Test
                 </div>
             </div>
-            <div class="number" style="
-                        margin-left: 350px;
-                        margin-top: 100px;
-                        position: absolute;
-                    "
-                >
-                    <h1>Draw the Number</h1>
-                    <p>Draw the number: <span id="target-number"></span></p>
-                    <canvas id="sheet" width="200" height="400"></canvas>
-                    <div id="controls">
-                        <button id="refresh-btn">Refresh</button>
-                        <button id="clear-btn">Clear</button>
-                        <button id="submit-btn">Submit</button>
+            <div class="number">
+                <div class="captcha-card">
+                    <h1 class="captcha-title">Number Verification</h1>
+                    <div class="captcha-instruction">
+                        Draw the number: <span id="target-number" class="target-number">5</span>
                     </div>
-                    <p id="response-message"></p>
+
+                    <div class="captcha-container">
+                        <div class="canvas-column">
+                            <canvas id="sheet" width="300" height="400"></canvas>
+                            <div id="response-message" class="response-message"></div>
+                        </div>
+
+                        <div class="instructions-panel">
+                            <div class="instructions-header">Guidelines</div>
+                            <ul class="instruction-list">
+                                <li class="instruction-item">
+                                    <span class="icon">✏️</span>
+                                    Draw like a digital font
+                                </li>
+                                <li class="instruction-item">
+                                    <span class="icon">⬆️⬇️</span>
+                                    Use full vertical space
+                                </li>
+                                <li class="instruction-item">
+                                    <span class="icon">🔄</span>
+                                    Refresh - Generate new number
+                                </li>
+                                <li class="instruction-item">
+                                    <span class="icon">🧹</span>
+                                    Clear - Reset canvas
+                                </li>
+                                <li class="instruction-item">
+                                    <span class="icon">🤖</span>
+                                    Submit - AI analysis
+                                </li>
+                            </ul>
+                            <div class="note">
+                                Note: Rejection typically indicates handwriting
+                                doesn't match computer-style numerals
+                            </div>
+                        </div>
+                    </div>
+                    <div id="response-message" class="response-message"></div>
+                    <div class="control-group">
+                        <button class="control-btn refresh" id="refresh-btn">
+                            <span class="btn-icon">🔄</span>
+                            New Number
+                        </button>
+                        <button class="control-btn clear" id="clear-btn">
+                            <span class="btn-icon">🧹</span>
+                            Clear
+                        </button>
+                        <button class="control-btn submit" id="submit-btn">
+                            <span class="btn-icon">✅</span>
+                            Verify
+                        </button>
+                    </div>
                 </div>
-                <p id="response-message"></p>
             </div>
         </div>
+    </div>
     </div>
     <script src="../static/js/script.js"></script>
 </body>

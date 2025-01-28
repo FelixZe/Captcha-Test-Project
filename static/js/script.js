@@ -14,6 +14,7 @@ window.onload = function () {
     refreshBtn.addEventListener("click", () => {
         targetNumber = Math.floor(Math.random() * 5) + 2; // Random number 2-6
         targetNumberElement.textContent = targetNumber;
+        canvas.clear();
     });
 
     // Configure drawing mode

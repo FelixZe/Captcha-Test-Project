@@ -5,8 +5,110 @@
     <title>Simple example</title>
     <script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.4.0/fabric.min.js'></script>
     <style type='text/css'>
-        #sheet {
-            border: 1px solid black;
+        .feedback-form {
+            margin-left: 350px;
+            margin-top: 100px;
+            position: absolute;
+        }
+
+        .feedback-card {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            width: 600px;
+        }
+
+        .feedback-title {
+            color: #2f2ee9;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-family: Inter;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #676A6F;
+            font-family: Inter;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 95%;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: Inter;
+            font-size: 0.9rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #2f2ee9;
+            box-shadow: 0 0 0 3px rgba(47, 46, 233, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            background: #2f2ee9;
+            color: white;
+            font-family: Inter;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(47, 46, 233, 0.3);
+        }
+
+        .btn-icon {
+            font-size: 1.1rem;
+        }
+
+        .response-message {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: Inter;
+            text-align: center;
+        }
+
+        /* Erfolgs- und Fehlermeldungen */
+        .response-message.success {
+            background: #e6f4ea;
+            color: #137333;
+            border: 1px solid #a8dab5;
+        }
+
+        .response-message.error {
+            background: #fce8e6;
+            color: #c5221f;
+            border: 1px solid #f5b7b1;
         }
     </style>
 </head>
@@ -192,16 +294,28 @@
                     style="color: #252525; font-size: 28px; font-family: Inter; font-weight: 600; line-height: 24px; word-wrap: break-word">
                     Captcha Test</div>
             </div>
-            <div class="feedback-form" style="margin-left: 350px; margin-top: 100px; position: absolute;">
-                <h2>Feedback senden</h2>
-                <form id="feedbackForm">
-                    <label for="name">Ihr Name:</label>
-                    <input type="text" id="name" name="name" placeholder="Ihr Name" required>
-                    <label for="message">Ihre Nachricht:</label>
-                    <textarea id="message" name="message" placeholder="Ihre Nachricht" rows="5" required></textarea>
-                    <button type="submit">Absenden</button>
-                </form>
-                <p id="responseMessage"></p>
+            <div class="feedback-form">
+                <div class="feedback-card">
+                    <h2 class="feedback-title">Feedback senden</h2>
+                    <form id="feedbackForm" class="feedback-content">
+                        <div class="form-group">
+                            <label for="name">Ihr Name:</label>
+                            <input type="text" id="name" name="name" class="form-input" placeholder="Ihr Name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Ihre Nachricht:</label>
+                            <textarea id="message" name="message" class="form-textarea" placeholder="Ihre Nachricht"
+                                rows="5" required></textarea>
+                        </div>
+
+                        <button type="submit" class="submit-btn">
+                            <span class="btn-icon">📩</span>
+                            Absenden
+                        </button>
+                    </form>
+                    <div id="responseMessage" class="response-message"></div>
+                </div>
             </div>
         </div>
     </div>
